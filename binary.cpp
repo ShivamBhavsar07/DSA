@@ -1,24 +1,46 @@
 #include <iostream>
-using namespace std;
+#include <vector>
+#include <algorithm>
 
-int main() {
-    int arr[] = {2, 3, 4, 10, 40};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int x = 10;
-    int left = 0, right = n - 1, mid;
+int binarySearch(const std::vector<int>& arr, int target) {
+    int left = 0;
+    int right = arr.size() - 1;
 
     while (left <= right) {
-        mid = left + (right - left) / 2;
+        int mid = left + (right - left) / 2;
 
-        if (arr[mid] == x) {
-            cout << "Element found at index " << mid << endl;
-            return 0;
+        if (arr[mid] == target) {
+            return mid;
         }
-        if (arr[mid] < x)
+        if (arr[mid] < target) {
             left = mid + 1;
-        else
+        } else {
             right = mid - 1;
+        }
     }
-    cout << "Element not found" << endl;
+    return -1; // Target not found
+}
+
+int main() {
+    int n, target;
+    std::cout << "Enter the number of elements: ";
+    std::cin >> n;
+
+    std::vector<int> arr(n);
+    std::cout << "Enter the elements (sorted): ";
+    for (int i = 0; i < n; ++i) {
+        std::cin >> arr[i];
+    }
+
+    std::cout << "Enter the element to search: ";
+    std::cin >> target;
+
+    int result = binarySearch(arr, target);
+    if (result != -1) {
+        std::cout << "Element found at index: " << result << std::endl;
+    } else {
+        std::cout << "Element not found." << std::endl;
+    }
+
     return 0;
 }
